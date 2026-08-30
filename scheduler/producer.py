@@ -1,7 +1,11 @@
+import os
 import pika
 
 def produce(host, body):
-    connection = pika.BlockingConnection(pika.ConnectionParameters(host))
+    username = os.environ.get("RABBITMQ_DEFAULT_USER")
+    password = os.environ.get("RABBITMQ_DEFAULT_PASS")
+    credentials = pika.PlainCredentials(username, password)
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host, credentials=credentials))
     channel = connection.channel()
     channel.exchange_declare(exchange="jobs", exchange_type="direct")
     channel.queue_declare(queue="router_jobs")
