@@ -1,13 +1,10 @@
 import os
 import time
 import pika
+from callback import callback
 
 user = os.getenv("RABBITMQ_DEFAULT_USER")
 pwd  = os.getenv("RABBITMQ_DEFAULT_PASS")
-
-def callback(ch, method, props, body):
-    print(f"body: {body.decode()}")
-    time.sleep(3)
 
 def consume(host):
     for attempt in range(10):
@@ -22,7 +19,6 @@ def consume(host):
     else:
         print("Could not connect after 10 attempts")
         exit(1)
-
     ch = conn.channel()
     ch.queue_declare(queue="router_jobs")
     ch.basic_qos(prefetch_count=1)
