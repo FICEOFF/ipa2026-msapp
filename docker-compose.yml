@@ -27,6 +27,20 @@ services:
       DB_NAME: "ipa2026_db"
       RABBITMQ_HOST: "rabbitmq"
 
+  worker:
+    build: ./worker
+    depends_on:
+      - mongo
+      - rabbitmq
+    networks:
+      - app-net
+    env_file:
+      - .env
+    environment:
+      MONGO_URI: "mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@mongo:27017/"
+      DB_NAME: "ipa2026_db"
+      RABBITMQ_HOST: "rabbitmq"
+
   mongo:
     image: mongo:6
     ports:

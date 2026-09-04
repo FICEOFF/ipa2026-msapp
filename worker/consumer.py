@@ -3,6 +3,7 @@ import time
 import pika
 from callback import callback
 
+rabbitmq_host = os.getenv("RABBITMQ_HOST")
 user = os.getenv("RABBITMQ_DEFAULT_USER")
 pwd  = os.getenv("RABBITMQ_DEFAULT_PASS")
 
@@ -25,5 +26,5 @@ def consume(host):
     ch.basic_consume(queue="router_jobs", on_message_callback=callback, auto_ack=True)
     ch.start_consuming()
 
-if __name__=='__main__':
-    consume("localhost")
+if __name__=="__main__":
+    consume(rabbitmq_host)

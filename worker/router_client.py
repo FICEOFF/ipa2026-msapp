@@ -11,12 +11,13 @@ def get_interfaces(ip, username, password):
         "device_type": "cisco_ios",
         "host": ip,
         "username": username,
-        "password": password,
+        "password": password
     }
     with ConnectHandler(**device) as conn:
         result = conn.send_command("show ip int br", use_textfsm=True)
         conn.disconnect()
     print(json.dumps(result, indent=2))
+    return result
 
-if __name__=='__main__':
+if __name__=="__main__":
     get_interfaces()
