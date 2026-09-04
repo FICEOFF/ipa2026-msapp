@@ -1,1 +1,7 @@
-body {background: lightsteelblue;}
+body {
+    background: lightsteelblue;
+}
+
+table, th, td {
+    border: 1px solid black;
+}

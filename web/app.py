@@ -12,26 +12,37 @@ mongo_uri = os.environ.get("MONGO_URI")
 db_name = os.environ.get("DB_NAME")
 
 client = MongoClient(mongo_uri)
-mydb = client[db_name]
-mycol = mydb["routers"]
+db = client[db_name]
+routers = db["routers"]
+interface_status = db["interface_status"]
 
 @app.route("/", methods=["GET"])
 def main():
-    return render_template("index.html", data=mycol.find({}, {"password": 0}))
+    data = routers.find({}, {"password": 0})
+    return render_template("index.html", data=data)
 
 @app.route("/add", methods=["POST"])
 def add_router():
-    ip = request.form.get("ip")
-    username = request.form.get("username")
-    password = request.form.get("password")
-    mycol.insert_one({"ip": ip, "username": username, "password": password})
+    try:
+        ip = request.form.get("ip")
+        username = request.form.get("username")
+        password = request.form.get("password")
+        routers.insert_one({"ip": ip, "username": username, "password": password})
+    except Exception:
+        pass
     return redirect("/")
+
+@app.route("/detail", methods=["GET"])
+def router_detail():
+    ip = request.args.get("ip")
+    data = interface_status.find({"router_ip": ip}).sort("timestamp", -1).limit(3)
+    return render_template("router_detail.html", router_ip=ip, data=data)
 
 @app.route("/delete", methods=["POST"])
 def delete_router():
     try:
         id = request.form.get("id")
-        mycol.delete_one({"_id": ObjectId(id)})
+        routers.delete_one({"_id": ObjectId(id)})
     except Exception:
         pass
     return redirect("/")

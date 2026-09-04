@@ -1,5 +1,7 @@
 <html>
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Routers</title>
     <link rel="stylesheet" href="/static/style.css"/>
 </head>
@@ -15,7 +17,7 @@
     <ul>
         {% for router in data %}
         <li>
-            {{ router.ip }} - {{ router.username }}
+            <a href="/detail?ip={{ router.ip }}">{{ router.ip }}</a> - {{ router.username }}
             <form method="POST" action="/delete" style="display:inline">
                 <input type="hidden" name="id" value="{{ router._id }}">
                 <button type="submit">Delete</button>
