@@ -29,9 +29,7 @@ def add_router():
         ip = request.form.get("ip")
         username = request.form.get("username")
         password = request.form.get("password")
-        routers.insert_one(
-            {"ip": ip, "username": username, "password": password}
-        )
+        routers.insert_one({"ip": ip, "username": username, "password": password})
     except Exception:
         pass
     return redirect("/")
@@ -40,9 +38,7 @@ def add_router():
 @app.route("/detail", methods=["GET"])
 def router_detail():
     ip = request.args.get("ip")
-    data = interface_status.find(
-        {"router_ip": ip}
-    ).sort("timestamp", -1).limit(3)
+    data = interface_status.find({"router_ip": ip}).sort("timestamp", -1).limit(3)
     return render_template("router_detail.html", router_ip=ip, data=data)
 
 
