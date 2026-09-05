@@ -42,10 +42,10 @@ jobs:
 
     - name: Build & Push Docker Images
       run: |
-        docker build -t FICEOFF/worker:latest ./worker
-        docker build -t FICEOFF/scheduler:latest ./scheduler
-        docker build -t FICEOFF/web:latest ./web
+        docker build -t ficeoff/worker:latest ./worker
+        docker build -t ficeoff/scheduler:latest ./scheduler
+        docker build -t ficeoff/web:latest ./web
 
-        docker push FICEOFF/worker:latest
-        docker push FICEOFF/scheduler:latest
-        docker push FICEOFF/web:latest
+        docker push ficeoff/worker:latest
+        docker push ficeoff/scheduler:latest
+        docker push ficeoff/web:latest
