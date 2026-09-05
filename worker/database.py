@@ -2,6 +2,7 @@ import os
 from pymongo import MongoClient
 from datetime import datetime, UTC
 
+
 def save_interface_status(router_ip, interfaces):
     MONGO_URI = os.getenv("MONGO_URI")
     DB_NAME = os.getenv("DB_NAME")

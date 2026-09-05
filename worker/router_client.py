@@ -3,6 +3,7 @@ import json
 import ntc_templates
 from netmiko import ConnectHandler
 
+
 def get_interfaces(ip, username, password):
     os.environ["NET_TEXTFSM"] = os.path.join(
         os.path.dirname(ntc_templates.__file__), "templates"
@@ -19,5 +20,6 @@ def get_interfaces(ip, username, password):
     print(json.dumps(result, indent=2))
     return result
 
-if __name__=="__main__":
+
+if __name__ == "__main__":
     get_interfaces()
